@@ -35,14 +35,16 @@ Focus on realism, layout clarity, and event hall atmosphere, with only about fiv
 }
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).end();
-
-  const data = req.body;
-  const prompt = buildPrompt(data);
-
-  console.log("Generated Prompt:\n", prompt);
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method Not Allowed. Use POST." });
+  }
 
   try {
+    const data = req.body;
+    const prompt = buildPrompt(data);
+
+    console.log("Generated Prompt:\n", prompt);
+
     const response = await openai.images.generate({
       model: "dall-e-3",
       prompt,
@@ -50,10 +52,17 @@ export default async function handler(req, res) {
       size: "1024x1024",
     });
 
+    // Check if the response has data and URL
+    if (!response?.data?.[0]?.url) {
+      console.error("No image URL returned from OpenAI.");
+      return res.status(500).json({ error: "Failed to generate image. No URL returned." });
+    }
+
     const imageUrl = response.data[0].url;
     res.status(200).json({ imageUrl });
+
   } catch (err) {
-    console.error("OpenAI API error:", err.message);
-    res.status(500).json({ error: "Image generation failed" });
+    console.error("OpenAI API error:", err.message || err);
+    res.status(500).json({ error: "Image generation failed. Check API key and prompt." });
   }
 }
