@@ -39,21 +39,25 @@ export default function Home() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setImageUrl(null);
+const handleSubmit = async (e) => {
+  e.preventDefault(); // ? Prevent default browser GET request
 
-    const res = await fetch("/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
+  setLoading(true);
+  setImageUrl(null);
 
-    const data = await res.json();
-    setImageUrl(data.imageUrl);
-    setLoading(false);
-  };
+  const res = await fetch("/api/generate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(form), // ? this sends the form data
+  });
+
+  const data = await res.json();
+  setImageUrl(data.imageUrl);
+  setLoading(false);
+};
+
 
   return (
     <div style={{ maxWidth: "800px", margin: "auto", padding: "2rem", fontFamily: "sans-serif" }}>
