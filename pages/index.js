@@ -115,8 +115,8 @@ export default function Home() {
         <label>8. What is your company name?</label><br />
         <input name="companyname" onChange={handleChange} style={{ width: "100%", marginBottom: "1rem" }} />
 
-        <label>9. Upload your logo (optional)</label><br />
-        <input name="logo" type="file" accept="image/*" onChange={handleChange} style={{ marginBottom: "1rem" }} /><br />
+        <label style={{ display: "none" }}>9. Upload your logo (optional)</label><br />
+        <input name="logo" type="file" accept="image/*" onChange={handleChange} style={{ marginBottom: "1rem", display: "none" }} /><br />
 
         <label>
           <input type="checkbox" name="doubleDecker" onChange={handleChange} /> Make this a double-decker stand
