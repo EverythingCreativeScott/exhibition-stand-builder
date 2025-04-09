@@ -36,23 +36,33 @@ export default function Home() {
   };
 
 const handleSubmit = async (e) => {
-  e.preventDefault(); // ? Prevent default browser GET request
-
+  e.preventDefault();
   setLoading(true);
   setImageUrl(null);
 
-  const res = await fetch("/api/generate", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(form), // ? this sends the form data
-  });
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
 
-  const data = await res.json();
-  setImageUrl(data.imageUrl);
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("API error response:", errorText);
+      throw new Error("Image generation failed or timed out.");
+    }
+
+    const data = await res.json();
+    setImageUrl(data.imageUrl);
+  } catch (err) {
+    alert("Generation failed — this may be due to a timeout or API error.");
+    console.error(err);
+  }
+
   setLoading(false);
 };
+
 
 
   return (
