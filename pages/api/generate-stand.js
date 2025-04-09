@@ -75,7 +75,7 @@ export default async function handler(req, res) {
       model: "dall-e-3",
       prompt,
       n: 1,
-      size: "1024x1024",
+      size: "1000x1000",
     });
 
     // Check if the response has data and URL
