@@ -41,7 +41,7 @@ const handleSubmit = async (e) => {
   setImageUrl(null);
 
   try {
-    const res = await fetch("/api/generate", {
+    const res = await fetch("/api/generate-stand", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
