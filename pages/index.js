@@ -36,38 +36,28 @@ export default function Home() {
   };
 
 const handleSubmit = async (e) => {
-  e.preventDefault();
+  e.preventDefault(); // ? Prevent default browser GET request
+
   setLoading(true);
   setImageUrl(null);
 
-  try {
-    const res = await fetch("/api/generate-stand", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
+  const res = await fetch("/api/generate-stand", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(form), // ? this sends the form data
+  });
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("API error response:", errorText);
-      throw new Error("Image generation failed or timed out.");
-    }
-
-    const data = await res.json();
-    setImageUrl(data.imageUrl);
-  } catch (err) {
-    alert("Generation failed — this may be due to a timeout or API error.");
-    console.error(err);
-  }
-
+  const data = await res.json();
+  setImageUrl(data.imageUrl);
   setLoading(false);
 };
 
 
-
   return (
     <div style={{ maxWidth: "800px", margin: "auto", padding: "2rem", fontFamily: "sans-serif" }}>
-      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>Design Your Exhibition Stand</h1>
+      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>? Design Your Exhibition Stand</h1>
       <form onSubmit={handleSubmit}>
         <label>1. What colours would you like to use on your stand?</label><br />
         <input name="colors" onChange={handleChange} style={{ width: "100%", marginBottom: "1rem" }} />

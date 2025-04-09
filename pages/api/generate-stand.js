@@ -1,8 +1,3 @@
-export const config = {
-  runtime: "nodejs",
-};
-
-
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -75,7 +70,7 @@ export default async function handler(req, res) {
       model: "dall-e-3",
       prompt,
       n: 1,
-      size: "1000x1000",
+      size: "1024x1024",
     });
 
     // Check if the response has data and URL
