@@ -10,8 +10,8 @@ export default function Home() {
     lighting: '',
     audio: '',
     companyname: '',
+	  specialties: '',
     doubleDecker: false,
-    logoUploaded: false
   });
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -29,10 +29,6 @@ export default function Home() {
             : prev[name].filter((v) => v !== value);
           return { ...prev, [name]: updatedArray };
         });
-      }
-    } else if (type === "file") {
-      if (files.length > 0) {
-        setForm((prev) => ({ ...prev, logoUploaded: true }));
       }
     } else {
       setForm((prev) => ({ ...prev, [name]: value }));
@@ -61,7 +57,7 @@ const handleSubmit = async (e) => {
 
   return (
     <div style={{ maxWidth: "800px", margin: "auto", padding: "2rem", fontFamily: "sans-serif" }}>
-      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>? Design Your Exhibition Stand</h1>
+      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>Design Your Exhibition Stand</h1>
       <form onSubmit={handleSubmit}>
         <label>1. What colours would you like to use on your stand?</label><br />
         <input name="colors" onChange={handleChange} style={{ width: "100%", marginBottom: "1rem" }} />
@@ -119,8 +115,14 @@ const handleSubmit = async (e) => {
         <label>8. What is your company name?</label><br />
         <input name="companyname" onChange={handleChange} style={{ width: "100%", marginBottom: "1rem" }} />
 
-        <label style={{ display: "none" }}>9. Upload your logo (optional)</label><br />
-        <input name="logo" type="file" accept="image/*" onChange={handleChange} style={{ marginBottom: "1rem", display: "none" }} /><br />
+<label>9. What is your companies key attribute(s)? (maximum of 3)</label><br />
+<input
+  name="specialties"
+  onChange={handleChange}
+  placeholder="e.g. Food, Technologies, Hospitality"
+  style={{ width: "100%", marginBottom: "1rem" }}
+/>
+
 
         <label>
           <input type="checkbox" name="doubleDecker" onChange={handleChange} /> Make this a double-decker stand

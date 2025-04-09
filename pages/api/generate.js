@@ -5,32 +5,53 @@ const openai = new OpenAI({
 });
 
 function buildPrompt(data) {
-  const {
-    colors,
-    marketing = [],
-    screens = [],
-    productDisplays = [],
-    seating = [],
-    lighting,
-    audio,
-    companyname,
-    doubleDecker,
-    logoUploaded
-  } = data;
+const {
+  colors,
+  marketing = [],
+  screens = [],
+  productDisplays = [],
+  seating = [],
+  lighting,
+  audio,
+  companyname,
+  specialties,
+  doubleDecker,
+} = data;
 
-  return `
+
+return `
 A realistic 3D render of a custom exhibition stand for a company called "${companyname}", designed for a modern event hall. 
 The stand features brand colors: ${colors || "not specified"}.
-${marketing.length > 0 ? `The layout includes marketing materials such as: ${marketing.join(", ")}.` : ""}
-${screens.length > 0 ? `The stand includes display screens such as: ${screens.join(", ")}.` : ""}
-${productDisplays.length > 0 ? `Product display areas include: ${productDisplays.join(", ")}.` : ""}
-${seating.length > 0 ? `Seating and meeting spaces requested: ${seating.join(", ")}.` : ""}
-${lighting ? `Lighting features: ${lighting}.` : ""}
-${audio ? `Audio setup and background music: ${audio}.` : ""}
-${logoUploaded ? "The company logo is placed prominently at the top of the stand." : ""}
-${doubleDecker ? "The stand is a double-decker with an upper floor and staircase, designed like a two-story exhibition booth." : ""}
-The stand includes casual, creative furniture like sofas and a modern layout with three demo zones, minimal branding, and realistic lighting. 
-Focus on realism, layout clarity, and event hall atmosphere, with only about five people nearby.
+
+The stand is designed specifically for a company that specialises in: ${specialties || "general services"}.
+
+${marketing.includes("Printing") ? "Include printed materials such as brochures or flyers." : ""}
+${marketing.includes("Merchandise") ? "Include branded merchandise like pens, mugs, or bags." : ""}
+${marketing.includes("Digital Advertising") ? "Include digital advertisements displayed on screens." : ""}
+${marketing.includes("Promotional Video") ? "Include a looping promotional video." : ""}
+${marketing.includes("Event Appointment booking") ? "Include an appointment booking system (digital or paper)." : ""}
+
+${screens.includes("TV Screens / Monitors") ? "Add TV screens or standard monitors for media display." : ""}
+${screens.includes("Touchscreens / Interactive Displays") ? "Include interactive touchscreen displays for user engagement." : ""}
+${screens.includes("LED Video Walls") ? "Include a large LED video wall for visual impact." : ""}
+${screens.includes("iPads / Tablets") ? "Add iPads or tablets placed around the stand." : ""}
+
+${productDisplays.includes("Shelving") ? "Add shelving units for product displays." : ""}
+${productDisplays.includes("counters") ? "Include counters to display and demonstrate products." : ""}
+
+${seating.includes("Seating") ? "Add casual seating such as sofas or stools." : ""}
+${seating.includes("Meeting Room") ? "Include a semi-private meeting room." : ""}
+
+${lighting === "Yes" ? "Add lighting features to enhance visibility and mood." : ""}
+${lighting === "No" ? "Do not include special lighting features." : ""}
+
+${audio === "Yes" ? "Include background music or small speakers for audio." : ""}
+${audio === "No" ? "No audio or music features are required." : ""}
+
+${doubleDecker ? "Make the stand a double-decker with stairs to an upper level." : ""}
+
+The stand includes casual, creative, modern layout with three demo zones, minimal branding, and realistic lighting. 
+Focus on realism, layout clarity, and event hall atmosphere, with only about four people nearby.
 `;
 }
 
